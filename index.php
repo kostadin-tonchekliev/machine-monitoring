@@ -11,6 +11,9 @@
         exit();
     }
 
+    exec("sudo raspi-gpio set 21 op");
+    exec("sudo raspi-gpio set 21 dh");
+
     if(array_key_exists('changeStatus', $_POST)) {
         changeStatus();
     }
@@ -35,14 +38,17 @@
     function initializeLeds(){
         global $mysqli;
 
-        $gpioPinsResult = $mysqli -> query("SELECT machineStatus, gpioPin FROM machines");
+        $gpioPinsResult = $mysqli -> query("SELECT machines.machineStatus, gpioPins.onPin, gpioPins.offPin FROM machines INNER JOIN gpioPins ON machines.machineId = gpioPins.id ;");
 
         while($pinRow = $gpioPinsResult->fetch_assoc()){
-            exec("sudo raspi-gpio set ".$pinRow['gpioPin']." op");
+            exec("sudo raspi-gpio set ".$pinRow['onPin']." op");
+            exec("sudo raspi-gpio set ".$pinRow['offPin']." op");
             if($pinRow['machineStatus'] == 'online'){
-                exec("sudo raspi-gpio set ".$pinRow['gpioPin']." dh");
+                exec("sudo raspi-gpio set ".$pinRow['offPin']." dl");
+                exec("sudo raspi-gpio set ".$pinRow['onPin']." dh");
             } elseif ($pinRow['machineStatus'] == 'offline'){
-                exec("sudo raspi-gpio set ".$pinRow['gpioPin']." dl");
+                exec("sudo raspi-gpio set ".$pinRow['onPin']." dl");
+                exec("sudo raspi-gpio set ".$pinRow['offPin']." dh");
             }
         }
     }
