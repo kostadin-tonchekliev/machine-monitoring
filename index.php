@@ -1,11 +1,7 @@
 <?php
 
     require __DIR__ . '/helpers.php';
-
-    $servername = "localhost";
-    $username = "admin";
-    $password = "adminpassword123";
-    $db = 'monitoring_app';
+    require __DIR__ . '/dbCredentials.php';
 
     $mysqli = new mysqli($servername, $username, $password, $db);
 
@@ -33,6 +29,7 @@
     }
 
     initializeLeds();
+    storeStatuses();
 ?>
 
 <!DOCTYPE html>
