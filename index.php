@@ -6,6 +6,9 @@
 
     $mysqli = new mysqli($servername, $username, $password, $db);
 
+    $machineId = $_GET['machineid'];
+    $status = $_GET['status'];
+
     if ($mysqli -> connect_errno) {
         echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
         exit();
@@ -16,6 +19,33 @@
 
     if(array_key_exists('changeStatus', $_POST)) {
         changeStatus();
+    }
+
+    if ($machineId != null && $status != null ) {
+        if ($machineId != null && $status != "Off" ) {
+            echo "[Err] Invalid status: $status";
+        } else {
+            ChangeMachineStatus($machineId);
+        }
+    }
+
+    function ChangeMachineStatus($machineId) {
+        global $mysqli;
+
+        $currentStatusResult = $mysqli -> query("SELECT * FROM machines WHERE machineId = $machineId ;");
+        while($currentRow = $currentStatusResult->fetch_assoc()){
+            $currentStatus = $currentRow['machineStatus'];
+        }
+
+        if ($currentStatus != null) {
+            if ($currentStatus == 'online'){
+                $mysqli -> query("UPDATE machines SET machineStatus = 'offline' WHERE machineid = ".$machineId);
+            } elseif ($currentStatus == 'offline'){
+                $mysqli -> query("UPDATE machines SET machineStatus = 'online' WHERE machineid = ".$machineId);
+            }
+        } else{
+            echo "[Err] Invalid machine ID: $machineId";
+        }
     }
 
     function changeStatus(){
