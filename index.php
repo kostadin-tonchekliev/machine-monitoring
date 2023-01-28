@@ -1,4 +1,7 @@
 <?php
+
+    require __DIR__ . '/helpers.php';
+
     $servername = "localhost";
     $username = "admin";
     $password = "adminpassword123";
@@ -7,7 +10,7 @@
     $mysqli = new mysqli($servername, $username, $password, $db);
 
     $machineId = $_GET['machineid'];
-    $status = $_GET['status'];
+    $action = $_GET['action'];
 
     if ($mysqli -> connect_errno) {
         echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
@@ -21,65 +24,11 @@
         changeStatus();
     }
 
-    if ($machineId != null && $status != null ) {
-        if ($machineId != null && $status != "Off" ) {
-            echo "[Err] Invalid status: $status";
+    if ($machineId != null && $action != null ) {
+        if ($machineId != null && $action != "ChangeStatus" ) {
+            echo "[Err] Invalid action: $action";
         } else {
             ChangeMachineStatus($machineId);
-        }
-    }
-
-    function ChangeMachineStatus($machineId) {
-        global $mysqli;
-
-        $currentStatusResult = $mysqli -> query("SELECT * FROM machines WHERE machineId = $machineId ;");
-        while($currentRow = $currentStatusResult->fetch_assoc()){
-            $currentStatus = $currentRow['machineStatus'];
-        }
-
-        if ($currentStatus != null) {
-            if ($currentStatus == 'online'){
-                $mysqli -> query("UPDATE machines SET machineStatus = 'offline' WHERE machineid = ".$machineId);
-            } elseif ($currentStatus == 'offline'){
-                $mysqli -> query("UPDATE machines SET machineStatus = 'online' WHERE machineid = ".$machineId);
-            }
-        } else{
-            echo "[Err] Invalid machine ID: $machineId";
-        }
-    }
-
-    function changeStatus(){
-        global $mysqli;
-        $machineId = $_POST['changeStatus'];
-
-        $statusResult = $mysqli -> query("SELECT machineStatus FROM machines WHERE machineId = ".$machineId);
-
-        while($currentRow = $statusResult->fetch_assoc()){
-            $currentStatus = $currentRow['machineStatus'];
-        }
-        
-        if($currentStatus == 'online') {
-            $mysqli -> query("UPDATE machines SET machineStatus = 'offline' WHERE machineid = ".$machineId);
-        } elseif ($currentStatus == 'offline') {
-            $mysqli -> query("UPDATE machines SET machineStatus = 'online' WHERE machineid = ".$machineId);
-        }
-    }
-
-    function initializeLeds(){
-        global $mysqli;
-
-        $gpioPinsResult = $mysqli -> query("SELECT machines.machineStatus, gpioPins.onPin, gpioPins.offPin FROM machines INNER JOIN gpioPins ON machines.machineId = gpioPins.id ;");
-
-        while($pinRow = $gpioPinsResult->fetch_assoc()){
-            exec("sudo raspi-gpio set ".$pinRow['onPin']." op");
-            exec("sudo raspi-gpio set ".$pinRow['offPin']." op");
-            if($pinRow['machineStatus'] == 'online'){
-                exec("sudo raspi-gpio set ".$pinRow['offPin']." dl");
-                exec("sudo raspi-gpio set ".$pinRow['onPin']." dh");
-            } elseif ($pinRow['machineStatus'] == 'offline'){
-                exec("sudo raspi-gpio set ".$pinRow['onPin']." dl");
-                exec("sudo raspi-gpio set ".$pinRow['offPin']." dh");
-            }
         }
     }
 
