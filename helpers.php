@@ -70,7 +70,7 @@
         $machineData = $mysqli -> query("SELECT * FROM machines ;");
 
         while($machineRow = $machineData -> fetch_assoc()){
-            array_push($tmpArray, $machineRow['machineId']);
+            array_push($tmpArray, array($machineRow['machineId'], $machineRow['machineName']));
         }
 
         return $tmpArray;
@@ -92,6 +92,7 @@
         $uptime = 0;
         $index = 0;
         $statusData = array();
+        $now_time = new Datetime(date('Y-m-d H:i:s', time()));
 
         $statusLogs = $mysqli -> query("SELECT * FROM statusLog WHERE machineId = ".$machineId);
 
@@ -99,8 +100,6 @@
             array_push($statusData, array($statusRow['newStatus'], $statusRow['dateTime']));
         }
 
-        $now_time = new Datetime(date('Y-m-d H:i:s', time()));
-        
         while($index != count($statusData)){
             $start_time = new DateTime($statusData[$index][1]);
             $tmpIndex = $index;
@@ -114,8 +113,7 @@
                     }
                 }
                 $end_time = new DateTime($statusData[$tmpIndex][1]);
-                $tmp = getTimeDiff($start_time, $end_time);
-                $downtime += $tmp;
+                $downtime += getTimeDiff($start_time, $end_time);
                 $index = $tmpIndex;
             }elseif ($statusData[$index][0] == 'online'){
                 while($checkForEnd == False){
@@ -125,16 +123,16 @@
                     }
                 }
                 $end_time = new DateTime($statusData[$tmpIndex][1]);
-                $tmp = getTimeDiff($start_time, $end_time);
-                $uptime += $tmp;
+                $uptime += getTimeDiff($start_time, $end_time);
                 $index = $tmpIndex;
             }
-
+            
             if($index == count($statusData)-1){
+                $start_time = new DateTime($statusData[$index][1]);
                 if($statusData[$index][0] == 'offline'){
                     $downtime += getTimeDiff($start_time, $now_time);
                 }elseif($statusData[$index][0] == 'online'){
-                    $uptime += getTimeDiff($start_time, $now_time);
+                    $uptime += getTimeDiff($start_time, $now_time);;
                 }
                 $index++;
             }
@@ -143,5 +141,6 @@
         $totalTime = $uptime + $downtime;
         $uptimePercent = ($uptime / $totalTime) * 100;
         $downtimePercent = ($downtime / $totalTime) * 100;
+
         return [round($uptimePercent), round($downtimePercent)];
     }

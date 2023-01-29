@@ -1,0 +1,119 @@
+#statistics {
+    width: 70%;
+    margin: auto;
+    background-color: #83c5be;
+    border-radius: 40px;
+    padding: 2%;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: sans-serif;
+}
+
+#machineData {
+    width: 70%;
+    margin: auto;
+    background-color: #83c5be;
+    border-radius: 40px;
+    padding: 1%;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: sans-serif;
+}
+
+#nameTag {
+    /*display: inline-block;*/
+    background-color: #edf6f9;
+    border-radius: 10px;
+    padding: 1%;
+}
+
+#wrapper {
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#uptime {
+    float: left;
+    background-color: rgb(0, 255, 17);
+}
+
+#downtime {
+    float: right;
+    background-color: rgb(255, 0, 0);
+    overflow: hidden;
+}
+
+#navigationMenu {
+    margin: auto;
+    text-align: center;
+}
+
+#legend {
+    width: 30%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#uptimeLegend {
+    float: left;
+    width: 40%;
+    padding: 3%;
+    border-radius: 10px;
+    background-color: rgb(0, 255, 17);
+}
+
+#downtimeLegend {
+    float: right;
+    width: 40%;
+    padding: 3%;
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+    overflow: hidden;
+}
+
+.mainTable {
+    margin: auto;
+    background-color: white;
+    border-collapse: collapse;
+    width: 60%;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.mainTable thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.mainTable th,
+.mainTable td {
+    padding: 12px 15px;
+}
+
+.mainTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.navButton {
+    background-color: #00aeff; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.navButton:hover {
+    background-color: #555555;
+    color: white;
+}

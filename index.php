@@ -36,11 +36,12 @@
 <html>
     <head>
         <title>Machine Status Page</title>
+        <link rel="stylesheet" href="stylesheet.css">
     </head>
-    <body>
-      <div>
+    <body >
+      <div id="machineData">
         <form method="post">
-            <table border=1>
+            <table class="mainTable">
                 <tr>
                     <th>Machine ID</th>
                     <th>Machine Name</th>
@@ -53,13 +54,21 @@
                         echo "<tr>" ;
                         echo "<th>".$row["machineId"]."</th>" ;
                         echo "<th>".$row["machineName"]."</th>" ;
-                        echo "<th>".$row["machineStatus"]."</th>" ;
+                        if ($row["machineStatus"] == 'online'){
+                            echo "<th style=\"color:green;\">".$row["machineStatus"]."</th>" ;
+                        } elseif ($row["machineStatus"] == 'offline'){
+                            echo "<th style=\"color:red;\">".$row["machineStatus"]."</th>" ;
+                        }
                         echo "<th><button type=\"submit\" value=\"$row[machineId]\" name=\"changeStatus\">Change Me</button></th>";
                         echo "</tr>";
                     }
                 ?>
             </table>
         </form>
+      </div>
+      <br/>
+      <div id="navigationMenu">
+        <a href='/statistics.php'><button class="navButton">Statistics Page</button></a>
       </div>
     </body>
 </html>
