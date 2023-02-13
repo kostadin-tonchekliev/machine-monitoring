@@ -21,7 +21,6 @@
 }
 
 #nameTag {
-    /*display: inline-block;*/
     background-color: #edf6f9;
     border-radius: 10px;
     padding: 1%;
@@ -116,4 +115,25 @@
 .navButton:hover {
     background-color: #555555;
     color: white;
+}
+
+#offlineMachines {
+    width: 70%;
+    margin: auto;
+    background-color: #83c5be;
+    border-radius: 40px;
+    padding: 1%;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: sans-serif;
+}
+
+#offlineResult {
+    background-color: #edf6f9;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+    width: 58%;
 }

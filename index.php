@@ -67,6 +67,22 @@
         </form>
       </div>
       <br/>
+      <div id="offlineMachines">
+        <?php
+            $offMachines = getOfflineMachines();
+            if (count($offMachines) != 0){
+                foreach ($offMachines as $offId){
+                    $result = getOfflineData($offId);
+                    echo "<div id=\"offlineResult\">";
+                    echo "<div id=\"offlineResultName\">".$result[0]."</div>";
+                    echo "<div id=\"offlineResultCount\">".$result[1]."</div>";
+                    echo "</div>";
+                }
+            }else {
+                echo "<div id=\"offlineResult\"'>No offline machines</div>";
+            }
+        ?>
+      </div>
       <div id="navigationMenu">
         <a href='/statistics.php'><button class="navButton">Statistics Page</button></a>
       </div>

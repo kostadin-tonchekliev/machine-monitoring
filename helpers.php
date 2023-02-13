@@ -76,6 +76,19 @@
         return $tmpArray;
     }
 
+    function getOfflineMachines(){
+        global $mysqli;
+        $tmpArray = array();
+
+        $offlineData = $mysqli -> query("SELECT * FROM machines WHERE machineStatus = \"offline\";");
+
+        while($machineRow = $offlineData -> fetch_assoc()){
+            array_push($tmpArray, $machineRow['machineId']);
+        }
+
+        return $tmpArray;
+    }
+
     function getTimeDiff($start, $end){
         $diff =  $start -> diff($end);
         $total_seconds = ($diff->days * 24 * 60); 
@@ -143,4 +156,32 @@
         $downtimePercent = ($downtime / $totalTime) * 100;
 
         return [round($uptimePercent), round($downtimePercent)];
+    }
+
+    function getOfflineData($machineId){
+        global $mysqli;
+        $index = 0;
+        $offlineDataArray = array();
+        $nowTime = new Datetime(date('Y-m-d H:i:s', time()));
+        
+        $offlineData = $mysqli -> query("SELECT machines.machineName, statusLog.newStatus, statusLog.dateTime FROM machines INNER JOIN statusLog ON machines.machineId = statusLog.machineId WHERE machines.machineId = ".$machineId." ORDER BY statusLog.id DESC;");
+
+        while($offlineRow = $offlineData->fetch_assoc()){
+            array_push($offlineDataArray, array($offlineRow['machineName'] ,$offlineRow['newStatus'], $offlineRow['dateTime']));
+        }
+
+        for($i=0; $i<count($offlineDataArray); $i++){
+            $machineName = $offlineDataArray[$i][0];
+            $indexStatus = $offlineDataArray[$i][1];
+            $indexTime = $offlineDataArray[$i][2];
+            
+            if($offlineDataArray[$i+1][1] == 'online'){
+                $offTime = new Datetime($indexTime);
+                break;
+            }
+        }
+
+        $timeDifference = getTimeDiff($offTime, $nowTime);
+
+        return [$machineName, $timeDifference];
     }
