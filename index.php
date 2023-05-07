@@ -1,12 +1,8 @@
 <?php
-
     require __DIR__ . '/helpers.php';
     require __DIR__ . '/dbCredentials.php';
 
     $mysqli = new mysqli($servername, $username, $password, $db);
-
-    $machineId = $_GET['machineid'];
-    $action = $_GET['action'];
 
     if ($mysqli -> connect_errno) {
         echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
@@ -20,16 +16,9 @@
         changeStatus();
     }
 
-    if ($machineId != null && $action != null ) {
-        if ($machineId != null && $action != "ChangeStatus" ) {
-            echo "[Err] Invalid action: $action";
-        } else {
-            ChangeMachineStatus($machineId);
-        }
-    }
-
     initializeLeds();
     storeStatuses();
+
 ?>
 
 <!DOCTYPE html>

@@ -1,0 +1,10 @@
+sleep 5
+clear
+echo "Starting boot sequence..."
+bash ~/initScript.sh
+echo "Servers initialized"
+bash ~/ipMatch.sh
+echo "Ip's matched"
+echo "Boot finished"
+echo "---------------------"
+tail -f /var/log/monitor.log

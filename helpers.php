@@ -1,6 +1,6 @@
 <?php
 
-    function ChangeMachineStatus($machineId) {
+    function changeMachineStatus($machineId) {
         global $mysqli;
 
         $currentStatusResult = $mysqli -> query("SELECT * FROM machines WHERE machineId = $machineId ;");
@@ -11,11 +11,28 @@
         if ($currentStatus != null) {
             if ($currentStatus == 'online'){
                 $mysqli -> query("UPDATE machines SET machineStatus = 'offline' WHERE machineid = ".$machineId);
+                writeToFile("Machine ID $machineId went offline");
             } elseif ($currentStatus == 'offline'){
                 $mysqli -> query("UPDATE machines SET machineStatus = 'online' WHERE machineid = ".$machineId);
+                writeToFile("Machine ID $machineId went online");
             }
         } else{
-            echo "[Err] Invalid machine ID: $machineId";
+            print("[Err] Invalid machine ID: $machineId");
+        }
+    }
+
+    function printCurrentStatus($machineId) {
+        global $mysqli;
+
+        $currentStatusResult = $mysqli -> query("SELECT machineStatus FROM machines WHERE machineId = $machineId ;");
+        while($currentRow = $currentStatusResult->fetch_assoc()){
+            $currentStatus = $currentRow['machineStatus'];
+        }
+
+        if ($currentStatus != null) {
+            print($currentStatus);
+        } else{
+            print("[Err] Invalid machine ID: $machineId");
         }
     }
 
@@ -31,8 +48,10 @@
         
         if($currentStatus == 'online') {
             $mysqli -> query("UPDATE machines SET machineStatus = 'offline' WHERE machineid = ".$machineId);
+            writeToFile("Machine ID $machineId went offline");
         } elseif ($currentStatus == 'offline') {
             $mysqli -> query("UPDATE machines SET machineStatus = 'online' WHERE machineid = ".$machineId);
+            writeToFile("Machine ID $machineId went online");
         }
     }
 
@@ -184,4 +203,11 @@
         $timeDifference = getTimeDiff($offTime, $nowTime);
 
         return [$machineName, $timeDifference];
+    }
+
+    function writeToFile($text){
+        if(!empty($_SERVER['REMOTE_ADDR'])){
+            $outputText = "[".date("Y-m-d H:i:s")."][".$_SERVER['REMOTE_ADDR']."] ".$text;
+            file_put_contents('/var/log/monitor.log', $outputText.PHP_EOL, FILE_APPEND);
+        }
     }
