@@ -1,6 +1,6 @@
 <?php
-    require __DIR__ . '/helpers.php';
-    require __DIR__ . '/dbCredentials.php';
+    require __DIR__ . '/helpers/functionHelpers.php';
+    require __DIR__ . '/helpers/dbCredentials.php';
 
     $mysqli = new mysqli($servername, $username, $password, $db);
 
