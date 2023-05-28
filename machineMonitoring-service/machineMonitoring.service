@@ -1,0 +1,11 @@
+[Unit]
+Description=Machine monitoring service
+
+[Service]
+User=root
+WorkingDirectory=/root/
+ExecStart=/usr/bin/bash monitoringService.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

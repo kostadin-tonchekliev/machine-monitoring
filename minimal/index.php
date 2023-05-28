@@ -1,6 +1,6 @@
 <?php
-    require __DIR__ . '/helpers/functionHelpers.php';
-    require __DIR__ . '/helpers/dbCredentials.php';
+    require __DIR__ . '/../helpers/functionHelpers.php';
+    require __DIR__ . '/../helpers/dbCredentials.php';
 
     $mysqli = new mysqli($servername, $username, $password, $db);
 
@@ -15,19 +15,17 @@
 
     initializeLeds();
     storeStatuses();
-
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
         <title>Machine Status Page</title>
         <link rel="stylesheet" href="stylesheet.css">
     </head>
-    <body >
-      <div id="machineData">
+    <body>
+    <div id="machineData">
         <form method="post">
-            <table class="mainTable">
+            <table class="mainTable", border=1>
                 <tr>
                     <th>Machine ID</th>
                     <th>Machine Name</th>
@@ -52,25 +50,8 @@
             </table>
         </form>
       </div>
-      <br/>
-      <div id="offlineMachines">
-        <?php
-            $offMachines = getOfflineMachines();
-            if (count($offMachines) != 0){
-                foreach ($offMachines as $offId){
-                    $result = getOfflineData($offId);
-                    echo "<div id=\"offlineResult\">";
-                    echo "<div id=\"offlineResultName\">".$result[0]."</div>";
-                    echo "<div id=\"offlineResultCount\">".$result[1]."</div>";
-                    echo "</div>";
-                }
-            }else {
-                echo "<div id=\"offlineResult\"'>No offline machines</div>";
-            }
-        ?>
-      </div>
       <div id="navigationMenu">
-        <a href='/statistics.php'><button class="navButton">Statistics Page</button></a>
+        <a href='/minimal/statistics.php'><button class="navButton">Statistics Page</button></a>
       </div>
     </body>
 </html>
