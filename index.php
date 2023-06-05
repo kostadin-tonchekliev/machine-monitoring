@@ -29,10 +29,10 @@
         <form method="post">
             <table class="mainTable">
                 <tr>
-                    <th>Machine ID</th>
-                    <th>Machine Name</th>
-                    <th>Machine Status</th>
-                    <th>Change Status</th>
+                    <th>Номер</th>
+                    <th>Име</th>
+                    <th>Статус</th>
+                    <th>Промени статус</th>
                 </tr>
                 <?php
                     $result = $mysqli -> query("SELECT * FROM machines");

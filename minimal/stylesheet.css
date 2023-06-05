@@ -8,7 +8,9 @@
 }
 
 #mainTable {
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 .mainTable th,
@@ -37,6 +39,7 @@
     background-color: #83c5be;
     border-radius: 5%;
     padding: 2%;
+    padding-bottom: 0;
     text-align: center;
     font-size: 0.9em;
     font-family: sans-serif;

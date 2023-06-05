@@ -169,17 +169,21 @@
                 $index++;
             }
         }
-        
+
         $totalTime = $uptime + $downtime;
+        $hourUptime = round($uptime/60/60, 2);
+        $hourDowntime = round($downtime/60/60, 2);
+        $hourTotal = round($totalTime/60/60, 2);
+        error_log("Uptime: $hourUptime Downtime: $hourDowntime");
+        error_log("Total Uptime: $hourTotal");
         $uptimePercent = ($uptime / $totalTime) * 100;
         $downtimePercent = ($downtime / $totalTime) * 100;
 
-        return [round($uptimePercent), round($downtimePercent)];
+        return [round($uptimePercent), round($downtimePercent), $hourTotal, $hourUptime, $hourDowntime];
     }
 
     function getOfflineData($machineId){
         global $mysqli;
-        $index = 0;
         $offlineDataArray = array();
         $nowTime = new Datetime(date('Y-m-d H:i:s', time()));
         
@@ -200,7 +204,7 @@
             }
         }
 
-        $timeDifference = getTimeDiff($offTime, $nowTime);
+        $timeDifference = round(getTimeDiff($offTime, $nowTime)/60, 2);
 
         return [$machineName, $timeDifference];
     }
