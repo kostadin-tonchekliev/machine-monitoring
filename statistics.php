@@ -31,14 +31,14 @@
         </div>
         <br>
         <div id="statistics">
-                <h3>Legend</h3>
+                <h3>Легенда</h3>
                 <div id="legend">
-                    <div id="uptimeLegend">Uptime</div><div id="downtimeLegend">Downtime</div>
+                    <div id="uptimeLegend">Време в което машината е работила</div><div id="downtimeLegend">Време в което машината не е работила</div>
                 </div>
         </div>
         <br>
         <div id="navigationMenu">
-            <a href="/index.php"><button class="navButton">HomePage</button></a>
+            <a href="/index.php"><button class="navButton">Начална Старница</button></a>
         </div>
     </body>
 </html>

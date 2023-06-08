@@ -30,7 +30,7 @@
         ?>
     </div>
     <div id="navigationMenu">
-        <a href="/minimal/index.php"><button class="navButton">HomePage</button></a>
+        <a href="/minimal/index.php"><button class="navButton">Начална страница</button></a>
     </div>
     </body>
 </html>

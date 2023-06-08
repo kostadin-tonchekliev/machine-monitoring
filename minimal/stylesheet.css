@@ -1,25 +1,37 @@
 #machineData {
-    width: 85%;
+    width: 90%;
     margin: auto;
+    margin-bottom: 20px;
     padding: 3%;
     text-align: center;
     font-size: 0.9em;
     font-family: sans-serif;
+    background-color: #83c5be;
+    border-radius: 15px;
 }
 
-#mainTable {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+.mainTable {
+    margin: auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.mainTable thead tr {
+    background-color: #edf6f9;
+    color: #ffffff;
+}
+
+.mainTable tbody tr {
+    border-bottom: 1px solid #dddddd;
 }
 
 .mainTable th,
 .mainTable td {
     padding: 1.3%;
+    background-color: #edf6f9;
 }
 
 #navigationMenu {
-    width: 30%;
+    width: 25%;
     text-align: center;
     margin: auto;
 }
@@ -30,14 +42,14 @@
     text-align: center;
     padding: 10%;
     border-radius: 1%;
-    margin-top: 3%;
+    margin-top: 1%;
 }
 
 #statistics {
-    width: 70%;
+    width: 90%;
     margin: auto;
     background-color: #83c5be;
-    border-radius: 5%;
+    border-radius: 15px;
     padding: 2%;
     padding-bottom: 0;
     text-align: center;

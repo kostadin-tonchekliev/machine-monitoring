@@ -41,11 +41,11 @@
                         echo "<th>".$row["machineId"]."</th>" ;
                         echo "<th>".$row["machineName"]."</th>" ;
                         if ($row["machineStatus"] == 'online'){
-                            echo "<th style=\"color:green;\">".$row["machineStatus"]."</th>" ;
+                            echo "<th style=\"color:green;\">".онлайн."</th>" ;
                         } elseif ($row["machineStatus"] == 'offline'){
-                            echo "<th style=\"color:red;\">".$row["machineStatus"]."</th>" ;
+                            echo "<th style=\"color:red;\">".офлайн."</th>" ;
                         }
-                        echo "<th><button type=\"submit\" value=\"$row[machineId]\" name=\"changeStatus\">Change Me</button></th>";
+                        echo "<th><button type=\"submit\" value=\"$row[machineId]\" name=\"changeStatus\">Промени ме</button></th>";
                         echo "</tr>";
                     }
                 ?>
@@ -70,7 +70,7 @@
         ?>
       </div>
       <div id="navigationMenu">
-        <a href='/statistics.php'><button class="navButton">Statistics Page</button></a>
+        <a href='/statistics.php'><button class="navButton">Статистики</button></a>
       </div>
     </body>
 </html>
