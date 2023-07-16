@@ -28,8 +28,8 @@ blue = (0, 0, 255)
 yellow = (255, 255, 0)
 
 #Wifi Variables
-ssid = "*****"
-password = '*****'
+ssid = "#########"
+password = '#########'
 
 #Controller Variables
 button = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
@@ -60,13 +60,13 @@ def connect():
     wlan.active(True)
     wlan.connect(ssid, password)
     while not wlan.isconnected():
-        print('Waiting for connection...')
-        printText('Waiting for', 'connection...')
+        print('Izchakvane na svyrzvane...')
+        printText('Izchakvane na', 'svyrzvane...')
         sleep(1)
     setColour(blue)
     ip = wlan.ifconfig()[0]
-    print(f'Connected on {ip}')
-    printText('Connected on:', ip)
+    print(f'Svyrzano na {ip}')
+    printText('Svyrzano na:', ip)
     return ip
 
 def openSocket(ip):
@@ -89,8 +89,8 @@ def detectMaster(connection):
         if responseKey == "Marco":
             masterIp = sender[0]
             connection.close()
-            print(f"Found master: {masterIp}")
-            printText("Found master:", masterIp)
+            print(f"Nameren server: {masterIp}")
+            printText("Nameren server:", masterIp)
             sleep(3)
             return masterIp
 
@@ -105,7 +105,7 @@ def setMachineStatus(ip):
 def mainFunction(ip):
     while True:
         setMachineStatus(ip)
-        printText('Waiting...')
+        printText('Izchakvane...')
         if not button.value():
             response = requests.get(f"http://{ip}/extraActions.php?machineid={machineId}&action=ChangeStatus")
             print(response.status_code)
@@ -114,10 +114,10 @@ def mainFunction(ip):
                     setColour(green)
                 elif response.text == 'offline':
                     setColour(red)
-                printText('Succesfull','request!')
+                printText('Uspeshen','request!')
             else:
                 setColour(red)
-                printText('Unsuccesfull','request!')
+                printText('Neuspeshen','rekuest!')
             response.close()
             sleep(1)
 
